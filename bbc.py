@@ -14,34 +14,8 @@ class BBC:
             self.home_html.text, 'html.parser'
         )
         self.adjacencyList = dict()
-        """
-        Graph:
-               /        bbc       \
-           / news \            / sport \              
-        war    corona   Football    Cricket         
-         |1     |3       |5          |6
-         |2     |4            
 
-        adjancencyList = [
-            // bbc is the base url
-            bbc : [news, sport]
-            news : [war, corona]
-            sport : [Football, Cricket]
-            war : [1, 2]
-            corona : [3,4]
-            Football : [5]
-            cricket : [6]
-            // 1 to 6 are the end nodes
-            1 : []
-            2 : []
-            3 : []
-            4 : []
-            5 : []
-            6 : []
-        ]
-        """
-
-    def crawl_categories(self):
+    def make_graph(self):
         """
         Crawls_categories from bbc.com
         """
@@ -75,7 +49,6 @@ class BBC:
         visited[self.base_url] = True
         while queue:
             link = queue.pop(0)
-            print(link)
             if len(self.adjacencyList[link]) < 1:
                 """Check if the link is the end node. i.e subcategory"""
                 headlines = get_headlines(link)

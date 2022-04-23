@@ -10,7 +10,7 @@ def crawl_sub_categories(category_link, category_name):
 
     html_doc = requests.get(category_link)
     soup = BeautifulSoup(html_doc.text, 'html.parser')
-    """Find anker tags with /category_name because everysubcategory 
+    """Find anker tags with /category_name because everysubcategory
     is /category_name/additional_path"""
     subcat = soup.find_all("a", {"href": re.compile(f"/{category_name}")})[:10]
     subcat = [i for i in subcat if i]
@@ -33,5 +33,8 @@ def get_headlines(link):
     hey = soup.find_all("h3")
     headlines = []
     for h in hey[1:15]:
-        headlines.append(h.text.strip())
+        headline = h.text.strip()
+        if len(headline) > 3:
+            # To remove short headline tags
+            headlines.append(headline)
     return headlines
